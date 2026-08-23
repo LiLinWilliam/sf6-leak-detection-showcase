@@ -29,7 +29,11 @@ def generate_device_series(
 ) -> pd.DataFrame:
     """Generate a fictional pressure/temperature time series."""
     n = days * samples_per_day
-    timestamps = pd.date_range("2026-01-01", periods=n, freq=f"{24 * 60 // samples_per_day}min")
+    timestamps = pd.date_range(
+        "2026-01-01",
+        periods=n,
+        freq=f"{24 * 60 // samples_per_day}min",
+    )
 
     t = np.arange(n, dtype=float)
     day_fraction = (t % samples_per_day) / samples_per_day
@@ -42,10 +46,15 @@ def generate_device_series(
         + rng.normal(0.0, 0.7, n)
     )
 
-    # A generic synthetic environmental relationship used only for demonstration.
+    # Generic synthetic environmental relationship used only for demonstration.
     temperature_effect = 0.0011 * (temperature - REFERENCE_TEMPERATURE_C)
     degradation = daily_decline * day_index
-    pressure = base_pressure + temperature_effect - degradation + rng.normal(0.0, noise_std, n)
+    pressure = (
+        base_pressure
+        + temperature_effect
+        - degradation
+        + rng.normal(0.0, noise_std, n)
+    )
 
     # Inject a few harmless demo imperfections: missing values and isolated spikes.
     missing_idx = rng.choice(n, size=max(1, n // 120), replace=False)
@@ -64,7 +73,7 @@ def generate_device_series(
 
 
 def build_synthetic_dataset() -> pd.DataFrame:
-    """Create several fictional devices with deliberately different behaviors."""
+    """Create fictional devices with deliberately different behaviors."""
     rng = np.random.default_rng(RNG_SEED)
     scenarios = [
         ("DEMO-STABLE", 0.610, 0.00000, 0.0015),
@@ -89,7 +98,7 @@ def build_synthetic_dataset() -> pd.DataFrame:
 
 
 def robust_clean_pressure(series: pd.Series) -> pd.Series:
-    """Interpolate missing samples and clip isolated extremes using robust statistics."""
+    """Interpolate missing samples and clip isolated extremes robustly."""
     x = series.astype(float).interpolate(limit_direction="both")
     median = x.median()
     mad = np.median(np.abs(x - median))
@@ -103,7 +112,7 @@ def robust_clean_pressure(series: pd.Series) -> pd.Series:
 
 
 def temperature_normalize(group: pd.DataFrame) -> pd.DataFrame:
-    """Estimate and remove a simple linear temperature relationship per device."""
+    """Estimate and remove a simple linear temperature relationship."""
     g = group.sort_values("timestamp").copy()
     g["pressure_clean_mpa"] = robust_clean_pressure(g["pressure_mpa"])
 
@@ -112,15 +121,18 @@ def temperature_normalize(group: pd.DataFrame) -> pd.DataFrame:
     slope, intercept = np.polyfit(temp, pressure, deg=1)
 
     expected_at_reference = slope * REFERENCE_TEMPERATURE_C + intercept
-    g["pressure_normalized_mpa"] = pressure - slope * (temp - REFERENCE_TEMPERATURE_C)
+    g["pressure_normalized_mpa"] = pressure - slope * (
+        temp - REFERENCE_TEMPERATURE_C
+    )
     g["environment_slope"] = slope
     g["reference_pressure_mpa"] = expected_at_reference
-    g["pressure_smoothed_mpa"] = g["pressure_normalized_mpa"].rolling(
-        window=24,
-        min_periods=6,
-        center=True,
-    ).median()
-    g["pressure_smoothed_mpa"] = g["pressure_smoothed_mpa"].bfill().ffill()
+    g["pressure_smoothed_mpa"] = (
+        g["pressure_normalized_mpa"]
+        .rolling(window=24, min_periods=6, center=True)
+        .median()
+        .bfill()
+        .ffill()
+    )
     return g
 
 
@@ -128,7 +140,12 @@ def score_device(group: pd.DataFrame) -> dict[str, float | str]:
     """Compute transparent illustrative features and a demo risk score."""
     g = group.sort_values("timestamp")
     y = g["pressure_smoothed_mpa"].to_numpy()
-    x_days = (g["timestamp"] - g["timestamp"].iloc[0]).dt.total_seconds().to_numpy() / 86400.0
+    x_days = (
+        (g["timestamp"] - g["timestamp"].iloc[0])
+        .dt.total_seconds()
+        .to_numpy()
+        / 86400.0
+    )
 
     slope_per_day, _ = np.polyfit(x_days, y, deg=1)
 
@@ -141,16 +158,16 @@ def score_device(group: pd.DataFrame) -> dict[str, float | str]:
 
     # Deliberately simple public baseline. Constants are illustrative only.
     risk_logit = (
-        9.0 * max(0.0, drop_from_baseline * 100.0)
-        + 8.0 * max(0.0, -slope_per_day * 1000.0)
-        + 1.5 * max(0.0, recent_volatility * 1000.0 - 1.0)
-        - 4.0
+        180.0 * max(0.0, drop_from_baseline)
+        + 1200.0 * max(0.0, -slope_per_day)
+        + 350.0 * max(0.0, recent_volatility - 0.0005)
+        - 2.5
     )
     risk_score = float(1.0 / (1.0 + np.exp(-risk_logit)))
 
-    if risk_score >= 0.80:
+    if risk_score >= 0.75:
         status = "high-demo-risk"
-    elif risk_score >= 0.45:
+    elif risk_score >= 0.25:
         status = "review"
     else:
         status = "low-demo-risk"
@@ -166,28 +183,25 @@ def score_device(group: pd.DataFrame) -> dict[str, float | str]:
 
 
 def run_demo() -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Run the full synthetic workflow and persist inspectable CSV outputs."""
+    """Run the synthetic workflow and persist inspectable CSV outputs."""
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     raw = build_synthetic_dataset()
-    processed = (
-        raw.groupby("device_id", group_keys=False)
-        .apply(temperature_normalize, include_groups=False)
-        .reset_index(drop=True)
+    processed_frames: list[pd.DataFrame] = []
+    for device_id, group in raw.groupby("device_id", sort=False):
+        frame = temperature_normalize(group)
+        frame["device_id"] = device_id
+        processed_frames.append(frame)
+
+    processed = pd.concat(processed_frames, ignore_index=True)
+    summaries = [
+        score_device(group)
+        for _, group in processed.groupby("device_id", sort=True)
+    ]
+    summary = pd.DataFrame(summaries).sort_values(
+        "demo_risk_score",
+        ascending=False,
     )
-
-    # groupby.apply with include_groups=False removes the grouping column in recent pandas;
-    # restore it deterministically from the original per-device processing if needed.
-    if "device_id" not in processed.columns:
-        processed_frames = []
-        for device_id, group in raw.groupby("device_id", sort=False):
-            frame = temperature_normalize(group)
-            frame["device_id"] = device_id
-            processed_frames.append(frame)
-        processed = pd.concat(processed_frames, ignore_index=True)
-
-    summaries = [score_device(group) for _, group in processed.groupby("device_id")]
-    summary = pd.DataFrame(summaries).sort_values("demo_risk_score", ascending=False)
 
     processed.to_csv(OUTPUT_DIR / "synthetic_sensor_data.csv", index=False)
     summary.to_csv(OUTPUT_DIR / "risk_summary.csv", index=False)
