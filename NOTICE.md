@@ -16,6 +16,8 @@ The examples here use generated synthetic data and a deliberately simplified bas
 
 ## Licensing note
 
-No open-source license is intentionally provided for this repository at this time. Publication on GitHub does not grant rights to any separate private implementation, patent, dataset, model, or other confidential material.
+The public showcase code in this repository is licensed under the **BSD-3-Clause-Clear** license. That license explicitly does **not** grant express or implied rights to any party's patents.
+
+The license applies only to material actually published in this repository. It does not grant rights to any separate private implementation, patent, dataset, model, private repository, confidential material, or unpublished know-how.
 
 For collaboration, evaluation, or commercial work, please contact the repository owner through GitHub.
