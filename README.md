@@ -1,5 +1,7 @@
 # SF₆ Leak Detection — Public Showcase
 
+[![Demo check](https://github.com/LiLinWilliam/sf6-leak-detection-showcase/actions/workflows/demo-check.yml/badge.svg)](https://github.com/LiLinWilliam/sf6-leak-detection-showcase/actions/workflows/demo-check.yml)
+
 A portfolio-oriented demonstration of industrial time-series monitoring for gas-insulated electrical equipment.
 
 This repository is intentionally **independent from the private research implementation**. It uses synthetic data and a simplified, transparent baseline so that the workflow can be inspected and executed without exposing proprietary code, private datasets, site identifiers, or patent-related implementation details.
@@ -61,15 +63,23 @@ The demo writes two files to `output/`:
 - `synthetic_sensor_data.csv` — generated sample measurements
 - `risk_summary.csv` — per-device monitoring summary
 
-With the fixed demo seed, the example includes stable, noisy, mildly degrading, and clearly degrading synthetic traces so the output is easy to inspect.
+With the fixed demo seed, the example includes stable, noisy, mildly degrading, and clearly degrading synthetic traces. The intended qualitative result is:
+
+| Synthetic device | Demo interpretation |
+|---|---|
+| `DEMO-STABLE` | low demo risk |
+| `DEMO-NOISY` | low demo risk despite extra noise |
+| `DEMO-WATCH` | review |
+| `DEMO-DECLINE` | high demo risk |
 
 ## Repository structure
 
 ```text
 .
 ├── README.md
-├── requirements.txt
+├── LICENSE
 ├── NOTICE.md
+├── requirements.txt
 ├── docs/
 │   ├── ARCHITECTURE.md
 │   └── METHODOLOGY.md
@@ -91,6 +101,12 @@ With the fixed demo seed, the example includes stable, noisy, mildly degrading, 
 ## Scope and limitations
 
 This repository is a technical portfolio demonstration, **not** a certified protection, alarm, diagnostic, or maintenance system. Synthetic examples do not establish field performance, reliability, or safety compliance. The scoring constants in the public demo are illustrative and are not operational thresholds.
+
+## License and IP boundary
+
+The material published in this repository is licensed under **BSD-3-Clause-Clear**. This variant explicitly states that no express or implied patent license is granted.
+
+The license covers only material actually published here. It does not license any separate private repository, patent, private dataset, model artifact, confidential implementation, or unpublished know-how. See [`NOTICE.md`](NOTICE.md) for the repository's public/private boundary.
 
 ## About the developer
 
