@@ -11,19 +11,32 @@ This repository is intentionally **independent from the private research impleme
 
 ## 中文介绍
 
-这是一个面向作品集与技术能力展示的 **SF₆ 气体绝缘电气设备时序监测项目**。公开仓库展示的是一套可以直接阅读和运行的独立 Demo，用于说明工业时序数据处理、异常检测、环境因素归一化、趋势分析与风险评分等工程能力。
+这是一个面向作品集与技术能力展示的 **SF₆ 气体绝缘电气设备时序监测项目**。公开仓库提供一套可以直接阅读、运行和复现的独立 Demo，用于展示工业时序数据处理、异常检测、环境因素归一化、趋势分析与风险评分等工程能力。
 
-本仓库与私有研究/专利证据仓库**相互独立**。这里使用的全部设备名称、时间序列和测量值均为合成数据；公开实现也是为展示目的重新编写的简化基线，不包含私有源代码、真实运行数据、现场或设备标识、私有模型权重、生产参数以及与专利相关的核心实现细节。
+本仓库与私有研究/专利证据仓库**相互独立**。这里使用的设备名称、时间序列和测量值均为合成数据；公开实现也是为了展示目的重新编写的简化基线，不包含私有源代码、真实运行数据、现场或设备标识、私有模型权重、生产参数以及与专利相关的核心实现细节。
 
-### 这个项目展示什么
+### 能力展示
 
 - 工业时序数据清洗与预处理
-- 传感器数据质量检查和稳健异常值处理
+- 传感器数据质量检查与稳健异常值处理
 - 考虑温度影响的压力归一化
 - 趋势、波动和异常特征工程
 - 面向潜在泄漏风险的可解释评分
 - 基于合成数据的可复现实验
 - 公开 Demo 与私有研发/知识产权之间的清晰隔离
+
+### 可复现 Demo 结果
+
+使用仓库固定随机种子运行公开 Demo，可得到以下结果：
+
+| 合成设备 | 趋势 (MPa/天) | Demo 风险分 | 状态 |
+|---|---:|---:|---|
+| `DEMO-DECLINE` | -0.000542 | 0.885683 | `high-demo-risk` |
+| `DEMO-WATCH` | -0.000224 | 0.336009 | `review` |
+| `DEMO-NOISY` | -0.000029 | 0.090162 | `low-demo-risk` |
+| `DEMO-STABLE` | -0.000002 | 0.076018 | `low-demo-risk` |
+
+这个演示刻意区分“噪声较大但总体稳定”和“持续下降”两类情况。完整说明见 [`docs/DEMO_RESULTS.md`](docs/DEMO_RESULTS.md)。这些数值仅是公开合成 Demo 的输出，不代表真实现场阈值、安全标准或生产性能指标。
 
 ### 公开内容与私有实现的边界
 
@@ -37,20 +50,16 @@ This repository is intentionally **independent from the private research impleme
 
 **本公开仓库没有从私有证据仓库复制任何文件。**
 
-这是一个技术作品展示，不是经过认证的保护、报警、诊断或检修系统。公开 Demo 中的评分常数仅用于让合成场景便于观察，不代表实际现场阈值或安全标准。
-
 本仓库采用 **BSD-3-Clause-Clear** 许可证；该许可证明确不授予任何明示或默示的专利许可。许可证只适用于本仓库实际公开的材料，不覆盖任何独立的私有仓库、专利、数据集、模型、机密实现或未公开 know-how。
 
-**可承接 Python、ML/AI 原型、数据分析、工业时序建模、异常检测和自动化相关的自由职业/合同项目。**
-
-如果你正在评估合作，可以直接通过本仓库的 **Issues → New issue → Project inquiry / 项目咨询** 留下需求概述。
+**可承接 Python、ML/AI 原型、数据分析、工业时序建模、异常检测和自动化相关的自由职业/合同项目。** 如果正在评估合作，可以直接通过 **Issues → New issue → Project inquiry / 项目咨询** 留下需求概述。
 
 ### 贡献者 / Contributors
 
 - **LiLinWilliam** — 项目所有者、维护者、领域工作与公开 Showcase 方向。
 - **ChatGPT (GPT-5.6 Sol, OpenAI)** — AI collaborator，参与公开 Showcase 的结构设计、文档、合成 Demo、仓库整理和表达优化。
 
-对于 AI 实际参与的提交，本仓库使用 GitHub 原生 `Co-authored-by` 机制，并采用 OpenAI 官方 Codex 共同作者身份 `Codex <codex@openai.com>`，因此相关提交可以由 GitHub 原生识别共同作者。详细说明见 [`CONTRIBUTORS.md`](CONTRIBUTORS.md)。
+对于 AI 实际参与的提交，本仓库使用 GitHub 原生 `Co-authored-by` 机制，并采用 OpenAI Codex 共同作者身份 `Codex <codex@openai.com>`。详细说明见 [`CONTRIBUTORS.md`](CONTRIBUTORS.md)。
 
 ---
 
@@ -60,15 +69,13 @@ This repository is intentionally **independent from the private research impleme
 - Sensor quality checks and robust outlier handling
 - Temperature-aware pressure normalization
 - Trend and anomaly feature engineering
-- Risk scoring for potential gas leakage
+- Explainable risk scoring for persistent degradation
 - Reproducible analysis on synthetic data
 - Clear separation between a public demo and protected/private R&D
 
 ## Problem
 
-Gas pressure measurements in electrical equipment are affected by temperature, sensor noise, missing samples, short-term disturbances, and long-term degradation. A useful monitoring pipeline therefore needs to distinguish ordinary environmental variation from persistent abnormal behavior.
-
-The public demo follows this high-level flow:
+Gas pressure measurements in electrical equipment can be affected by temperature, sensor noise, missing samples, short-term disturbances, and long-term degradation. A useful monitoring pipeline therefore needs to distinguish ordinary environmental variation from persistent abnormal behavior.
 
 ```mermaid
 flowchart LR
@@ -78,6 +85,19 @@ flowchart LR
     D --> E[Transparent baseline risk score]
     E --> F[Device-level summary]
 ```
+
+## Reproducible demo results
+
+With the fixed public-demo seed, the current implementation produces:
+
+| Synthetic device | Trend (MPa/day) | Demo risk score | Status |
+|---|---:|---:|---|
+| `DEMO-DECLINE` | -0.000542 | 0.885683 | `high-demo-risk` |
+| `DEMO-WATCH` | -0.000224 | 0.336009 | `review` |
+| `DEMO-NOISY` | -0.000029 | 0.090162 | `low-demo-risk` |
+| `DEMO-STABLE` | -0.000002 | 0.076018 | `low-demo-risk` |
+
+The synthetic example is designed so persistent decline ranks above ordinary measurement noise. See [`docs/DEMO_RESULTS.md`](docs/DEMO_RESULTS.md) for reproducibility notes. These are demo-only outputs, not field-validation metrics or operational thresholds.
 
 ## Public demo vs. private implementation
 
@@ -106,19 +126,10 @@ pip install -r requirements.txt
 python examples/synthetic_demo.py
 ```
 
-The demo writes two files to `output/`:
+The demo writes:
 
-- `synthetic_sensor_data.csv` — generated sample measurements
-- `risk_summary.csv` — per-device monitoring summary
-
-With the fixed demo seed, the example includes stable, noisy, mildly degrading, and clearly degrading synthetic traces. The intended qualitative result is:
-
-| Synthetic device | Demo interpretation |
-|---|---|
-| `DEMO-STABLE` | low demo risk |
-| `DEMO-NOISY` | low demo risk despite extra noise |
-| `DEMO-WATCH` | review |
-| `DEMO-DECLINE` | high demo risk |
+- `output/synthetic_sensor_data.csv`
+- `output/risk_summary.csv`
 
 ## Repository structure
 
@@ -131,7 +142,8 @@ With the fixed demo seed, the example includes stable, noisy, mildly degrading, 
 ├── requirements.txt
 ├── docs/
 │   ├── ARCHITECTURE.md
-│   └── METHODOLOGY.md
+│   ├── METHODOLOGY.md
+│   └── DEMO_RESULTS.md
 ├── examples/
 │   └── synthetic_demo.py
 └── .github/
