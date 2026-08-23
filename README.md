@@ -6,6 +6,42 @@ A portfolio-oriented demonstration of industrial time-series monitoring for gas-
 
 This repository is intentionally **independent from the private research implementation**. It uses synthetic data and a simplified, transparent baseline so that the workflow can be inspected and executed without exposing proprietary code, private datasets, site identifiers, or patent-related implementation details.
 
+## 中文介绍
+
+这是一个面向作品集与技术能力展示的 **SF₆ 气体绝缘电气设备时序监测项目**。公开仓库展示的是一套可以直接阅读和运行的独立 Demo，用于说明工业时序数据处理、异常检测、环境因素归一化、趋势分析与风险评分等工程能力。
+
+本仓库与私有研究/专利证据仓库**相互独立**。这里使用的全部设备名称、时间序列和测量值均为合成数据；公开实现也是为展示目的重新编写的简化基线，不包含私有源代码、真实运行数据、现场或设备标识、私有模型权重、生产参数以及与专利相关的核心实现细节。
+
+### 这个项目展示什么
+
+- 工业时序数据清洗与预处理
+- 传感器数据质量检查和稳健异常值处理
+- 考虑温度影响的压力归一化
+- 趋势、波动和异常特征工程
+- 面向潜在泄漏风险的可解释评分
+- 基于合成数据的可复现实验
+- 公开 Demo 与私有研发/知识产权之间的清晰隔离
+
+### 公开内容与私有实现的边界
+
+| 公开 Showcase | 保持私有 |
+|---|---|
+| 合成数据生成器 | 真实运行数据 |
+| 通用数据处理方法 | 面向具体现场/设备的数据处理逻辑 |
+| 透明、简化的演示评分 | 私有模型逻辑与调优后的决策规则 |
+| 高层架构和方法说明 | 专利相关核心实现细节 |
+| 可复现的示例输出 | 私有模型权重和生产配置 |
+
+**本公开仓库没有从私有证据仓库复制任何文件。**
+
+这是一个技术作品展示，不是经过认证的保护、报警、诊断或检修系统。公开 Demo 中的评分常数仅用于让合成场景便于观察，不代表实际现场阈值或安全标准。
+
+本仓库采用 **BSD-3-Clause-Clear** 许可证；该许可证明确不授予任何明示或默示的专利许可。许可证只适用于本仓库实际公开的材料，不覆盖任何独立的私有仓库、专利、数据集、模型、机密实现或未公开 know-how。
+
+**可承接 Python、ML/AI 原型、数据分析、工业时序建模、异常检测和自动化相关的自由职业/合同项目。**
+
+---
+
 ## What this demonstrates
 
 - Industrial time-series preprocessing
