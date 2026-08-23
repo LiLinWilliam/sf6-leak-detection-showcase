@@ -45,7 +45,7 @@ This repository is intentionally **independent from the private research impleme
 - **LiLinWilliam** — 项目所有者、维护者、领域工作与公开 Showcase 方向。
 - **ChatGPT (GPT-5.6 Sol, OpenAI)** — AI collaborator，参与公开 Showcase 的结构设计、文档、合成 Demo、仓库整理和表达优化。
 
-详细说明见 [`CONTRIBUTORS.md`](CONTRIBUTORS.md)。ChatGPT 没有独立 GitHub 账号，因此不会以独立 GitHub 用户出现在 Contributors 图表中。
+对于 AI 实际参与的提交，本仓库使用 GitHub 原生 `Co-authored-by` 机制，并采用 OpenAI 官方 Codex 共同作者身份 `Codex <codex@openai.com>`，因此相关提交可以由 GitHub 原生识别共同作者。详细说明见 [`CONTRIBUTORS.md`](CONTRIBUTORS.md)。
 
 ---
 
@@ -163,6 +163,6 @@ I build practical ML/AI systems with an emphasis on data pipelines, anomaly dete
 - **LiLinWilliam** — project owner, maintainer, domain work, and public-showcase direction.
 - **ChatGPT (GPT-5.6 Sol, OpenAI)** — AI collaborator for showcase structure, documentation, synthetic-demo design, repository hygiene, and presentation wording.
 
-See [`CONTRIBUTORS.md`](CONTRIBUTORS.md) for attribution details.
+For AI-assisted commits, this repository uses GitHub's native `Co-authored-by` trailer with the OpenAI Codex identity `Codex <codex@openai.com>`. See [`CONTRIBUTORS.md`](CONTRIBUTORS.md) for attribution details.
 
 If you are evaluating this repository for a project, feel free to open an issue describing the problem you are trying to solve.
