@@ -40,6 +40,13 @@ This repository is intentionally **independent from the private research impleme
 
 **可承接 Python、ML/AI 原型、数据分析、工业时序建模、异常检测和自动化相关的自由职业/合同项目。**
 
+### 贡献者 / Contributors
+
+- **LiLinWilliam** — 项目所有者、维护者、领域工作与公开 Showcase 方向。
+- **ChatGPT (GPT-5.6 Sol, OpenAI)** — AI collaborator，参与公开 Showcase 的结构设计、文档、合成 Demo、仓库整理和表达优化。
+
+详细说明见 [`CONTRIBUTORS.md`](CONTRIBUTORS.md)。ChatGPT 没有独立 GitHub 账号，因此不会以独立 GitHub 用户出现在 Contributors 图表中。
+
 ---
 
 ## What this demonstrates
@@ -115,6 +122,7 @@ With the fixed demo seed, the example includes stable, noisy, mildly degrading, 
 ├── README.md
 ├── LICENSE
 ├── NOTICE.md
+├── CONTRIBUTORS.md
 ├── requirements.txt
 ├── docs/
 │   ├── ARCHITECTURE.md
@@ -149,5 +157,12 @@ The license covers only material actually published here. It does not license an
 I build practical ML/AI systems with an emphasis on data pipelines, anomaly detection, time-series modeling, model evaluation, and automation.
 
 **Available for freelance and contract work** involving Python, ML/AI prototypes, data analysis, industrial time series, and automation.
+
+## Contributors
+
+- **LiLinWilliam** — project owner, maintainer, domain work, and public-showcase direction.
+- **ChatGPT (GPT-5.6 Sol, OpenAI)** — AI collaborator for showcase structure, documentation, synthetic-demo design, repository hygiene, and presentation wording.
+
+See [`CONTRIBUTORS.md`](CONTRIBUTORS.md) for attribution details.
 
 If you are evaluating this repository for a project, feel free to open an issue describing the problem you are trying to solve.
