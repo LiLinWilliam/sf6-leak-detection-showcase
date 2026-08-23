@@ -1,6 +1,9 @@
 # SF₆ Leak Detection — Public Showcase
 
 [![Demo check](https://github.com/LiLinWilliam/sf6-leak-detection-showcase/actions/workflows/demo-check.yml/badge.svg)](https://github.com/LiLinWilliam/sf6-leak-detection-showcase/actions/workflows/demo-check.yml)
+![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![License](https://img.shields.io/badge/license-BSD--3--Clause--Clear-blue)
+![Human × AI](https://img.shields.io/badge/collaboration-Human%20%C3%97%20AI-6f42c1)
 
 A portfolio-oriented demonstration of industrial time-series monitoring for gas-insulated electrical equipment.
 
@@ -39,6 +42,8 @@ This repository is intentionally **independent from the private research impleme
 本仓库采用 **BSD-3-Clause-Clear** 许可证；该许可证明确不授予任何明示或默示的专利许可。许可证只适用于本仓库实际公开的材料，不覆盖任何独立的私有仓库、专利、数据集、模型、机密实现或未公开 know-how。
 
 **可承接 Python、ML/AI 原型、数据分析、工业时序建模、异常检测和自动化相关的自由职业/合同项目。**
+
+如果你正在评估合作，可以直接通过本仓库的 **Issues → New issue → Project inquiry / 项目咨询** 留下需求概述。
 
 ### 贡献者 / Contributors
 
@@ -130,8 +135,10 @@ With the fixed demo seed, the example includes stable, noisy, mildly degrading, 
 ├── examples/
 │   └── synthetic_demo.py
 └── .github/
-    └── workflows/
-        └── demo-check.yml
+    ├── workflows/
+    │   └── demo-check.yml
+    └── ISSUE_TEMPLATE/
+        └── project-inquiry.md
 ```
 
 ## Engineering principles
@@ -158,11 +165,11 @@ I build practical ML/AI systems with an emphasis on data pipelines, anomaly dete
 
 **Available for freelance and contract work** involving Python, ML/AI prototypes, data analysis, industrial time series, and automation.
 
+If you are evaluating this repository for a project, open a **Project inquiry** issue with a short description of the problem, data type, expected deliverable, and constraints.
+
 ## Contributors
 
 - **LiLinWilliam** — project owner, maintainer, domain work, and public-showcase direction.
 - **ChatGPT (GPT-5.6 Sol, OpenAI)** — AI collaborator for showcase structure, documentation, synthetic-demo design, repository hygiene, and presentation wording.
 
 For AI-assisted commits, this repository uses GitHub's native `Co-authored-by` trailer with the OpenAI Codex identity `Codex <codex@openai.com>`. See [`CONTRIBUTORS.md`](CONTRIBUTORS.md) for attribution details.
-
-If you are evaluating this repository for a project, feel free to open an issue describing the problem you are trying to solve.
