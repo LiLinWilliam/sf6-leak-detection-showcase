@@ -4,6 +4,7 @@
 ![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![License](https://img.shields.io/badge/license-BSD--3--Clause--Clear-blue)
 ![Human × AI](https://img.shields.io/badge/collaboration-Human%20%C3%97%20AI-6f42c1)
+[![Freelancer](https://img.shields.io/badge/Freelancer-LiLinWilliam-29B2FE?logo=freelancer&logoColor=white)](https://www.freelancer.in/u/lilinwilliam)
 
 A portfolio-oriented demonstration of industrial time-series monitoring for gas-insulated electrical equipment.
 
@@ -23,6 +24,7 @@ This repository is intentionally **independent from the private research impleme
 - 趋势、波动和异常特征工程
 - 面向潜在泄漏风险的可解释评分
 - 基于合成数据的可复现实验
+- 自动化行为测试与 CI 校验
 - 公开 Demo 与私有研发/知识产权之间的清晰隔离
 
 ### 可复现 Demo 结果
@@ -52,7 +54,7 @@ This repository is intentionally **independent from the private research impleme
 
 本仓库采用 **BSD-3-Clause-Clear** 许可证；该许可证明确不授予任何明示或默示的专利许可。许可证只适用于本仓库实际公开的材料，不覆盖任何独立的私有仓库、专利、数据集、模型、机密实现或未公开 know-how。
 
-**可承接 Python、ML/AI 原型、数据分析、工业时序建模、异常检测和自动化相关的自由职业/合同项目。** 如果正在评估合作，可以直接通过 **Issues → New issue → Project inquiry / 项目咨询** 留下需求概述。
+**可承接 Python、ML/AI 原型、数据分析、工业时序建模、异常检测和自动化相关的自由职业/合同项目。** 可以通过上方 Freelancer 链接联系，也可以通过 **Issues → New issue → Project inquiry / 项目咨询** 留下需求概述。
 
 ### 贡献者 / Contributors
 
@@ -71,6 +73,7 @@ This repository is intentionally **independent from the private research impleme
 - Trend and anomaly feature engineering
 - Explainable risk scoring for persistent degradation
 - Reproducible analysis on synthetic data
+- Automated behavior tests and CI validation
 - Clear separation between a public demo and protected/private R&D
 
 ## Problem
@@ -124,6 +127,7 @@ source .venv/bin/activate
 
 pip install -r requirements.txt
 python examples/synthetic_demo.py
+python -m unittest discover -s tests -v
 ```
 
 The demo writes:
@@ -146,6 +150,8 @@ The demo writes:
 │   └── DEMO_RESULTS.md
 ├── examples/
 │   └── synthetic_demo.py
+├── tests/
+│   └── test_demo.py
 └── .github/
     ├── workflows/
     │   └── demo-check.yml
@@ -159,7 +165,8 @@ The demo writes:
 2. **Time-aware analysis** — trends and persistence matter more than isolated points.
 3. **Physics-aware thinking** — environmental effects should be separated from degradation signals where possible.
 4. **Reproducibility** — the demo uses deterministic random seeds and generated data.
-5. **IP hygiene** — public examples demonstrate capability without leaking proprietary implementation details.
+5. **Testable behavior** — CI checks expected synthetic-scenario behavior rather than only file existence.
+6. **IP hygiene** — public examples demonstrate capability without leaking proprietary implementation details.
 
 ## Scope and limitations
 
@@ -177,7 +184,7 @@ I build practical ML/AI systems with an emphasis on data pipelines, anomaly dete
 
 **Available for freelance and contract work** involving Python, ML/AI prototypes, data analysis, industrial time series, and automation.
 
-If you are evaluating this repository for a project, open a **Project inquiry** issue with a short description of the problem, data type, expected deliverable, and constraints.
+Use the Freelancer badge at the top or open a **Project inquiry** issue with a short description of the problem, data type, expected deliverable, and constraints.
 
 ## Contributors
 
